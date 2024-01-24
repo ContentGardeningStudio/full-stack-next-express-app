@@ -1,28 +1,11 @@
 "use client";
 
-import {
-  Link,
-  Paper,
-  Box,
-  Grid,
-  Typography,
-  Avatar,
-  Button,
-  TextField,
-} from "@mui/material";
+import { Link, Paper, Box, Grid, Typography, Avatar } from "@mui/material";
 
+import LoginForm from "@/src/components/forms/LoginForm";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 
 export default function SignIn() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
-  };
-
   return (
     <Grid container component="main" sx={{ height: "100vh" }}>
       <Grid
@@ -57,41 +40,8 @@ export default function SignIn() {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <Box
-            component="form"
-            noValidate
-            onSubmit={handleSubmit}
-            sx={{ mt: 1 }}
-          >
-            <TextField
-              required
-              fullWidth
-              margin="normal"
-              id="email_field"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-            />
-            <TextField
-              required
-              fullWidth
-              margin="normal"
-              id="password_field"
-              name="password"
-              label="Password"
-              type="password"
-              autoComplete="current-password"
-            />
-            <Button
-              fullWidth
-              size="large"
-              type="submit"
-              variant="contained"
-              sx={{ my: 3 }}
-            >
-              Sign In
-            </Button>
+          <Box sx={{ mt: 1 }}>
+            <LoginForm />
             <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">

@@ -1,29 +1,11 @@
 "use client";
 
-import {
-  Link,
-  Paper,
-  Box,
-  Grid,
-  Typography,
-  Avatar,
-  Button,
-  TextField,
-} from "@mui/material";
+import { Link, Paper, Box, Grid, Typography, Avatar } from "@mui/material";
 
+import RegisterForm from "@/src/components/forms/RegisterForm";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 
 export default function SignUn() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-      confirmPassword: data.get("confirm_password"),
-    });
-  };
-
   return (
     <Grid container component="main" sx={{ height: "100vh" }}>
       <Grid
@@ -58,51 +40,8 @@ export default function SignUn() {
           <Typography component="h1" variant="h5">
             Sign Up
           </Typography>
-          <Box
-            component="form"
-            noValidate
-            onSubmit={handleSubmit}
-            sx={{ mt: 1 }}
-          >
-            <TextField
-              required
-              fullWidth
-              margin="normal"
-              id="email_field"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-            />
-            <TextField
-              required
-              fullWidth
-              margin="normal"
-              id="password"
-              name="password"
-              label="Password"
-              type="password"
-              autoComplete="off"
-            />
-            <TextField
-              required
-              fullWidth
-              margin="normal"
-              type="password"
-              id="confirm_password"
-              name="confirm_password"
-              label="Confirm Password"
-              autoComplete="off"
-            />
-            <Button
-              fullWidth
-              size="large"
-              type="submit"
-              variant="contained"
-              sx={{ my: 3 }}
-            >
-              Sign Up
-            </Button>
+          <Box sx={{ mt: 1 }}>
+            <RegisterForm />
             <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">
