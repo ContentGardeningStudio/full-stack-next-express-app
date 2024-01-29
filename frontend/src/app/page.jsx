@@ -1,5 +1,9 @@
-import Image from "next/image";
+import Box from "@mui/material/Box";
 
 export default function Home() {
-  return <h1>hello world</h1>;
+  return (
+    <Box className="container" sx={{ pt: 4 }}>
+      <h1>hello world</h1>
+    </Box>
+  );
 }

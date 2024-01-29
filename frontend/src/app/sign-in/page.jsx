@@ -7,7 +7,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 
 export default function SignIn() {
   return (
-    <Grid container component="main" sx={{ height: "100vh" }}>
+    <Grid container component="main" sx={{ height: "calc(100vh - 64px)" }}>
       <Grid
         item
         xs={false}

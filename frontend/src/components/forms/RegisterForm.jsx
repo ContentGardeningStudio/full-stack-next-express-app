@@ -30,7 +30,7 @@ export default function RegisterForm() {
         [yup.ref("password"), null],
         "Password does not match the confirmation"
       )
-      .required(),
+      .required("Confirm password is required"),
   });
 
   const [register] = useSignUpMutation();

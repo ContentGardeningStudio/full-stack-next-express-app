@@ -1,8 +1,10 @@
+import "@/scss/main.scss";
 import { Inter } from "next/font/google";
 import { ToastContainer } from "react-toastify";
 import ReduxProvider from "@/redux/ReduxProvider";
 
 import "react-toastify/dist/ReactToastify.css";
+import Header from "@/components/layout/Header";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,7 +19,8 @@ export default function RootLayout({ children }) {
     <ReduxProvider>
       <html lang="en">
         <body className={inter.className}>
-          {children}
+          <Header />
+          <div className="body-content">{children}</div>
           <ToastContainer position="top-right" />
         </body>
       </html>
