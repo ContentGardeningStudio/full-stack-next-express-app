@@ -21,7 +21,7 @@ export default function CustomTextField({ name, type, ...props }) {
 
   if (type == "number") {
     config.inputProps = {
-      inputMode: "decimal",
+      inputMode: "numeric",
     };
   } else {
     config.type = type;

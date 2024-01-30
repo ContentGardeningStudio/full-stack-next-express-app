@@ -54,7 +54,11 @@ export default function RegisterForm() {
         router.push("/sign-in");
       })
       .catch((error) => {
-        const errorMsg = error.data.message || "Somthings went wrong !";
+        let errorMsg = "Somthings went wrong !";
+
+        if (error.status != "FETCH_ERROR") {
+          errorMsg = error.data.message;
+        }
 
         // show error notification
         setServerErrors(errorMsg);
