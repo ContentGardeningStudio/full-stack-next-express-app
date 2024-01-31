@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import { Formik, Form, useFormikContext } from "formik";
 import { useSignInMutation } from "@/redux/features/publicApiSlice";
 import { toast } from "react-toastify";
-
+import { yupErrors } from "@/src/data/constants";
 import * as yup from "yup";
 
 import CustomTextField from "@/components/custom-ui/CustomTextField";
@@ -21,9 +21,10 @@ export default function LoginForm() {
   };
 
   // Schema validation
+  yup.setLocale(yupErrors);
   const validationSchema = yup.object({
-    email: yup.string().required(),
-    password: yup.string().required(),
+    email: yup.string().email().lowercase().required(),
+    password: yup.string().min(6).required(),
   });
 
   const [login] = useSignInMutation();
@@ -75,15 +76,16 @@ export default function LoginForm() {
         <Form>
           <CustomTextField
             label="Email Address"
+            type="email"
             name="email"
             variant="outlined"
-            sx={{ mt: 2 }}
+            sx={{ mt: 3 }}
           />
           <CustomPasswordField
             label="Password"
             name="password"
             variant="outlined"
-            sx={{ mt: 2 }}
+            sx={{ mt: 3 }}
           />
           {serverErrors && (
             <Alert severity="error" sx={{ mt: 3, mb: 2 }}>
@@ -96,7 +98,7 @@ export default function LoginForm() {
             type="submit"
             variant="contained"
             sx={{ my: 3 }}
-            disabled={formik.isSubmitting}
+            disabled={!formik.isValid || formik.isSubmitting}
           >
             Sign In
           </Button>

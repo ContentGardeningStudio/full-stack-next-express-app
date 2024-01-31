@@ -4,7 +4,7 @@ import { useAddBookMutation } from "@/redux/features/privateApiSlice";
 import { getFromLocalStorage } from "@/src/lib/common";
 import { toast } from "react-toastify";
 import { styled } from "@mui/material/styles";
-
+import { yupErrors } from "@/src/data/constants";
 import * as yup from "yup";
 
 import CustomTextField from "@/components/custom-ui/CustomTextField";
@@ -43,6 +43,7 @@ export default function NewBookForm({ onValidate }) {
   };
 
   // Schema validation
+  yup.setLocale(yupErrors);
   const validationSchema = yup.object({
     title: yup.string().required(),
     author: yup.string().required(),
@@ -81,8 +82,8 @@ export default function NewBookForm({ onValidate }) {
     addBook(bodyFormData)
       .unwrap()
       .then(() => {
-        // show login success notification
-        toast.success("Bokk added with success.");
+        // show success notification
+        toast.success("Book added with success.");
 
         onValidate();
       })
@@ -202,7 +203,7 @@ export default function NewBookForm({ onValidate }) {
             type="submit"
             variant="contained"
             sx={{ mt: 3 }}
-            disabled={!formik.touched || formik.isSubmitting}
+            disabled={!formik.isValid || file === null || formik.isSubmitting}
           >
             Publish
           </Button>
