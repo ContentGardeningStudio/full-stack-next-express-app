@@ -16,7 +16,22 @@ const publicApiSlice = initialPublicApiSlice.injectEndpoints({
         body: { email, password },
       }),
     }),
+    getBooks: builder.query({
+      query: () => "/books",
+    }),
+    getTopBooks: builder.query({
+      query: () => "/books/bestrating",
+    }),
+    findBook: builder.query({
+      query: (id) => `/books/${id}`,
+    }),
   }),
 });
 
-export const { useSignUpMutation, useSignInMutation } = publicApiSlice;
+export const {
+  useSignUpMutation,
+  useSignInMutation,
+  useGetBooksQuery,
+  useGetTopBooksQuery,
+  useFindBookQuery,
+} = publicApiSlice;

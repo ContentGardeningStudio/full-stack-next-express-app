@@ -75,5 +75,4 @@ cypress/videos/
 *.sqlite
 *.sqlite3
 
-# images
-backend/images/
+
