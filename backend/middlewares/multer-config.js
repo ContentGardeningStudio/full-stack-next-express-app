@@ -31,7 +31,6 @@ module.exports = (req, res, next) => {
 
         // Resize and convert to Webp using sharp
         const buffer = await sharp(req.file.buffer)
-          .resize({ width: 206, height: 260 })
           .toFormat("webp", { quality: 85 })
           .toBuffer();
 
