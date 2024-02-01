@@ -14,8 +14,6 @@ import Alert from "@mui/material/Alert";
 export default function Books() {
   const { data, isError } = useGetBooksQuery();
 
-  console.log("all books :", data);
-
   if (isError) {
     return (
       <Box display="flex" justifyContent="center">

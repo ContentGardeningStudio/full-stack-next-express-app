@@ -2,9 +2,10 @@ import "@/scss/main.scss";
 import { Inter } from "next/font/google";
 import { ToastContainer } from "react-toastify";
 import ReduxProvider from "@/redux/ReduxProvider";
+import Auth from "@/components/utils/Auth";
+import Header from "@/components/layout/Header";
 
 import "react-toastify/dist/ReactToastify.css";
-import Header from "@/components/layout/Header";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,6 +18,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <ReduxProvider>
+      <Auth />
       <html lang="en">
         <body className={inter.className}>
           <Header />

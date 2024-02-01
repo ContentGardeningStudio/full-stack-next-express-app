@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setLogout } from "@/redux/features/authSlice";
 
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -15,33 +17,33 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import { removeAuthLocalStorage } from "@/src/lib/common";
 
 const drawerWidth = 240;
-const navItems = [
-  {
-    title: "Home",
-    href: "/",
-  },
-  {
-    title: "Add a book",
-    href: "/new-book",
-  },
-  {
-    title: "Sign in",
-    href: "/sign-in",
-  },
-  {
-    title: "Sign up",
-    href: "/sign-up",
-  },
-];
+
+const LinkItem = ({ title, ...props }) => {
+  return (
+    <ListItem disablePadding>
+      <ListItemButton {...props}>
+        <ListItemText primary={title} />
+      </ListItemButton>
+    </ListItem>
+  );
+};
 
 function Header(props) {
   const { window } = props;
+  const dispatch = useDispatch();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { isAuthenticated } = useSelector((state) => state.auth);
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
+  };
+
+  const handleLogout = () => {
+    dispatch(setLogout());
+    removeAuthLocalStorage();
   };
 
   const drawer = (
@@ -51,13 +53,16 @@ function Header(props) {
       </Typography>
       <Divider />
       <List>
-        {navItems.map((item, i) => (
-          <ListItem key={i} disablePadding>
-            <ListItemButton href={item.href}>
-              <ListItemText primary={item.title} />
-            </ListItemButton>
-          </ListItem>
-        ))}
+        <LinkItem title="Home" href="/" />
+        <LinkItem
+          title="Add a book"
+          href={isAuthenticated ? "/new-book" : "/sign-in"}
+        />
+        {isAuthenticated ? (
+          <LinkItem title="Logout" onClick={handleLogout} />
+        ) : (
+          <LinkItem title="Sign in" href="/sign-in" />
+        )}
       </List>
     </Box>
   );
@@ -88,11 +93,25 @@ function Header(props) {
           </Typography>
 
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
-            {navItems.map((item, i) => (
-              <Button key={i} sx={{ color: "#fff" }} href={item.href}>
-                {item.title}
+            <Button sx={{ color: "#fff" }} href="/">
+              Home
+            </Button>
+            <Button
+              sx={{ color: "#fff" }}
+              href={isAuthenticated ? "/new-book" : "/sign-in"}
+            >
+              Add a book
+            </Button>
+
+            {isAuthenticated ? (
+              <Button sx={{ color: "#fff" }} onClick={handleLogout}>
+                Logout
               </Button>
-            ))}
+            ) : (
+              <Button sx={{ color: "#fff" }} href="/sign-in">
+                Sign in
+              </Button>
+            )}
           </Box>
         </Toolbar>
       </AppBar>

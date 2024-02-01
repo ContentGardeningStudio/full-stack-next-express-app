@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useSelector } from "react-redux";
 import Image from "next/image";
 import libraryImg from "../../../public/images/library.jpg";
 
@@ -9,9 +11,20 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import NewBookForm from "@/src/components/forms/NewBookForm";
+import Backdrop from "@/src/components/layout/Backdrop";
 
 export default function SignIn() {
+  const router = useRouter();
   const [created, setCreated] = useState(false);
+  const { isAuthenticated, isLoading } = useSelector((state) => state.auth);
+
+  if (isLoading) {
+    return <Backdrop open />;
+  }
+
+  if (!isLoading && !isAuthenticated) {
+    router.push("/sign-in");
+  }
 
   return (
     <Container
