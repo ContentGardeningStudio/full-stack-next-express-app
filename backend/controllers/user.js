@@ -43,11 +43,28 @@ exports.login = (req, res, next) => {
           res.status(200).json({
             userId: user._id,
             token: jwt.sign({ userId: user._id }, process.env.TOKEN_SECRET, {
-              expiresIn: "24h",
+              expiresIn: "30d",
             }),
           });
         })
         .catch((error) => res.status(500).json({ error }));
     })
     .catch((error) => res.status(500).json({ error }));
+};
+
+exports.verify = (req, res, next) => {
+  console.log("req headers :", req.headers);
+  try {
+    const token = req.headers.authorization.split(" ")[1];
+    const decodedToken = jwt.verify(token, process.env.TOKEN_SECRET);
+    const userId = decodedToken.userId;
+    res.status(200).json({
+      userId: userId,
+      message: "ok",
+    });
+  } catch (error) {
+    res.status(401).json({
+      error: new Error("You are not authenticated"),
+    });
+  }
 };
